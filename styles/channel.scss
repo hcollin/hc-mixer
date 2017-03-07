@@ -1,14 +1,13 @@
 
-
-
-div.mixer {
-  display: flex;
-  flex-direction: row;
-}
+@import "slider";
+@import "duration";
 
 div.channel {
 
   $channelBgColor: #555555;
+
+  position: relative;
+  z-index: 20;
 
   flex: 0 0 auto;
   width: 128px;
@@ -29,42 +28,51 @@ div.channel {
     }
   }
 
-
-
-  h1 {
-    height: 16px;
-    width: 100%;
-    margin: 0;
-    padding: 0;
-    padding-left: 4px;
-    text-align: left;
-    font-size: 12px;
-    line-height: 16px;
-    color: darken($channelBgColor, 30);
-    border-bottom: solid 1px darken($channelBgColor, 10);
+  &.open-file {
+    justify-content: center;
+    img.open-folder {
+        width: 112px;
+        height: 112px;
+    }
   }
 
-  h2 {
-    height: 20px;
-    width: 100%;
-    margin: 0;
-    padding: 0;
-    padding-left: 4px;
-    text-align: left;
-    font-size: 9px;
-    line-height: 20px;
-    background: repeating-linear-gradient(darken($channelBgColor, 40), darken($channelBgColor, 20) 3px);
-    color: lighten($channelBgColor, 30);
-    border-bottom: solid 1px darken($channelBgColor, 10);
-  }
+
 
   div.header {
     width: 100%;
-    height: 48px;
+
+
+    h1 {
+      height: 20px;
+      width: 100%;
+      margin: 0;
+      padding: 0;
+      padding-left: 4px;
+      text-align: left;
+      font-size: 12px;
+      line-height: 18px;
+      color: darken($channelBgColor, 40);
+
+    }
+
+    h2 {
+      height: 22px;
+      width: 100%;
+      margin: 0;
+      padding: 0;
+      padding-left: 4px;
+      text-align: left;
+      font-size: 9px;
+      line-height: 20px;
+      background: repeating-linear-gradient(darken($channelBgColor, 40), darken($channelBgColor, 20) 3px);
+      color: lighten($channelBgColor, 30);
+      border-bottom: solid 1px darken($channelBgColor, 10);
+      border-top: solid 1px darken($channelBgColor, 10);
+    }
   }
 
   div.main-content {
-    flex: 1;
+    
     width: 100%;
     display: flex;
     flex-direction: column;

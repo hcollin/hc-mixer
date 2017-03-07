@@ -1,0 +1,77 @@
+
+div.mixer {
+
+ $mixerBgColor: #333333;
+
+ position: relative;
+
+  display: flex;
+  flex-direction: row;
+
+  background: repeating-linear-gradient($mixerBgColor 0%, darken($mixerBgColor, 10) 1%, lighten($mixerBgColor, 10) 2%);
+
+  & > p {
+    position: absolute;
+
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    z-index: 1;
+
+    font-size: 200px;
+    font-weight: bold;
+    color: rgba(255, 255, 255, 0.10);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    user-select: none;
+
+  }
+
+  div.add-channel {
+
+    $addChannelColor: lighten($mixerBgColor, 30);
+
+    position: relative;
+    z-index: 10;
+
+    width: 64px;
+    height: 560px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    font-size: 72px;
+    font-weight: bold;
+    color: white;
+
+    background: linear-gradient( $addChannelColor 0%, darken($addChannelColor, 10) 100%);
+    border: solid 2px;
+    border-color: darken($addChannelColor, 10) darken($addChannelColor, 20) darken($addChannelColor, 20) darken($addChannelColor, 10);
+    user-select: none;
+    cursor: pointer;
+
+    span.counter {
+      font-size: 14px;
+      display: block;
+      font-weight: normal;
+    }
+
+    &:hover {
+      background: linear-gradient( $addChannelColor 0%, lighten($addChannelColor, 10) 100%);
+      border: solid 2px;
+      border-color: darken($addChannelColor, 10) darken($addChannelColor, 20) darken($addChannelColor, 20) darken($addChannelColor, 10);
+    }
+
+
+
+  }
+
+}
+
+@import "channel";

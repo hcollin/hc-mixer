@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Channel } from './components/channel.jsx';
+import { Mixer } from './components/mixer.jsx';
 
 
 // Styles
@@ -18,11 +18,7 @@ export default class App extends React.Component {
         <header>
           <h1>Tracker</h1>
         </header>
-        <div className="mixer">
-          <Channel name="Yao People" sound="./sounds/yao.mp3"></Channel>
-          <Channel name="Rise" sound="./sounds/rise.mp3"></Channel>
-          <Channel name="House Techno" sound="./sounds/house.mp3"></Channel>
-        </div>
+        <Mixer></Mixer>
 
       </div>
     )

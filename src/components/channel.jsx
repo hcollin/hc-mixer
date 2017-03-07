@@ -4,8 +4,9 @@ import 'howler';
 import { PlayButton } from '../common/playButton.jsx';
 import { StopButton } from '../common/stopButton.jsx';
 import { MuteButton } from '../common/muteButton.jsx';
+import { LoopButton } from '../common/loopButton.jsx';
 import { Slider } from '../common/slider.jsx';
-
+import { Timer } from '../common/timer.jsx';
 
 export class Channel extends React.Component {
   constructor(props) {
@@ -14,30 +15,17 @@ export class Channel extends React.Component {
     // Initial state
     this.state = {
       playing: false,
-      ready: false,
-      status: "LOADING",
+      ready: true,
+      status: "EMPTY",
       volume: 0.8,
-      muted: false
+      muted: false,
+      loop: false,
+      durationText: "",
+      muteIcon: ""
+
     };
 
-    this.howler = new Howl({
-      src: [this.props.sound],
-      volume: this.state.volume,
-      onload: () => {
-        this.setState(prevState => ({
-          playing: false,
-          ready: true,
-          status: "STOP"
-        }));
-      },
-      onend: () => {
-        this.setState(prevState => ({
-          playing: false,
-          ready: true,
-          status: "STOP"
-        }));
-      }
-    });
+    this.handleOpenFile = this.handleOpenFile.bind(this);
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -46,6 +34,52 @@ export class Channel extends React.Component {
       return;
     }
 
+    if(this.props.sound && this.state.status == "EMPTY") {
+      this.loadSound(this.props.sound);
+    }
+
+  }
+
+  loadSound(filename) {
+    this.setState(prevState => ({
+      status: "LOADING",
+      ready: false
+    }), () => {
+      this.howler = new Howl({
+        src: [filename],
+        volume: this.state.volume,
+        onload: () => {
+
+          const fullDurationInSec = Math.round(this.howler.duration());
+          const durationFullMins = Math.floor(fullDurationInSec/60);
+          const durationRestSec = fullDurationInSec - (durationFullMins * 60);
+
+          this.setState(prevState => ({
+            playing: false,
+            ready: true,
+            status: "STOP",
+            durationText: (durationFullMins < 10 ? "0"+durationFullMins : durationFullMins) + ":" + (durationRestSec < 10 ? "0"+ durationRestSec: durationRestSec)
+          }));
+
+
+
+        },
+        onend: () => {
+          if(!this.state.looped) {
+            this.setState(prevState => ({
+              playing: false,
+              ready: true,
+              status: "STOP"
+            }));
+          }
+        }
+      });
+    });
+
+  }
+
+  handleOpenFile(e) {
+    this.loadSound(this.props.sound);
   }
 
   play() {
@@ -61,8 +95,11 @@ export class Channel extends React.Component {
   }
 
   switchMute() {
-    console.log("Mute sound!");
     this.howler.mute(this.state.muted);
+  }
+
+  switchLooped() {
+    this.howler.loop(this.state.looped);
   }
 
   changeVolume() {
@@ -71,10 +108,20 @@ export class Channel extends React.Component {
 
   render() {
 
-    if(!this.state.ready) {
+    // Loading screen
+    if(this.state.status == "LOADING") {
       return (
           <div className="channel loading">
             <img src="./imgs/gears.svg" className="loading-gears"></img>
+          </div>
+      );
+    }
+
+    // Open File screen
+    if(this.state.status == "EMPTY") {
+      return (
+          <div className="channel open-file">
+            <img src="./imgs/open-folder.svg" className="open-folder" onClick={this.handleOpenFile}></img>
           </div>
       );
     }
@@ -93,10 +140,25 @@ export class Channel extends React.Component {
     const muteProps = {
       muted: this.state.muted,
       onClick: () => {
-        console.log("Mute clicked!");
-        this.setState( prevState => ({
-          muted: !prevState.muted
-        }), this.switchMute)
+        this.setState( prevState => {
+          const muteState = !prevState.muted;
+          return {
+            muted: muteState
+          };
+        }, this.switchMute)
+      }
+    }
+
+    const loopProps = {
+      looped: this.state.looped,
+      onClick: () => {
+        console.log("Loop clicked!");
+        this.setState( prevState => {
+          const loopState = !prevState.looped;
+          return {
+            looped: loopState
+          };
+        }, this.switchLooped)
       }
     }
 
@@ -132,8 +194,13 @@ export class Channel extends React.Component {
       }
     };
 
-
-    // console.log("Channel Render ", this.props.name, this.state , stopProps);
+    const timerProps = {
+      active: this.state.playing,
+      interval: 1,
+      onTick: () => {
+        return this.howler.seek();
+      }
+    };
 
     return (
       <div className="channel">
@@ -143,16 +210,26 @@ export class Channel extends React.Component {
         </div>
 
         <div className="main-content">
-
+          <div className="duration">
+            <Timer {...timerProps}></Timer>
+            <span className="full-duration">{this.state.durationText}</span>
+            <span className="icons">
+              {this.state.muted &&
+                <img src="./imgs/speaker-off-white.svg"></img>
+              }
+              {this.state.looped &&
+                <img src="./imgs/looping-white.svg"></img>
+              }
+            </span>
+            <span className="status">{this.state.status}</span>
+          </div>
           <div className="volume-slider-container">
             <Slider {...sliderProps}></Slider>
             <div className="buttons">
               <MuteButton {...muteProps}></MuteButton>
+              <LoopButton {...loopProps}></LoopButton>
             </div>
           </div>
-
-
-          {this.state.status}
         </div>
 
         <div className="footer-buttons">
