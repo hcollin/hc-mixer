@@ -20,6 +20,7 @@ export class Channel extends React.Component {
       status: "EMPTY",
       volume: 0.8,
       pan: 0,
+      speed: 1,
       muted: false,
       loop: false,
       name: this.props.name,
@@ -116,6 +117,10 @@ export class Channel extends React.Component {
 
   changePan() {
     this.howler.stereo(this.state.pan);
+  }
+
+  changeSpeed() {
+    this.howler.rate(this.state.speed);
   }
 
   render() {
@@ -232,6 +237,22 @@ export class Channel extends React.Component {
       }
     }
 
+    const speedProps = {
+      active: true,
+      minValue: 50,
+      maxValue: 400,
+      step: 1,
+      defaultValue: 100,
+      label: "SPEED",
+      onChange: (newSpeed) => {
+        console.log("newSpeed", newSpeed);
+        this.setState({
+          speed: newSpeed/100
+        }, this.changeSpeed);
+      }
+    };
+
+
     return (
       <div className="channel">
         <div className="header">
@@ -259,6 +280,7 @@ export class Channel extends React.Component {
               <MuteButton {...muteProps}></MuteButton>
               <LoopButton {...loopProps}></LoopButton>
               <Knob {...panProps}></Knob>
+              <Knob {...speedProps}></Knob>
             </div>
           </div>
         </div>

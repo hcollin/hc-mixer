@@ -27,7 +27,7 @@ div.knob-container {
     z-index: 1000;
 
     &.active {
-      
+
       display: block;
     }
 
@@ -37,7 +37,7 @@ div.knob-container {
   .knob {
     width: 48px;
     height: 48px;
-    background-color: #DDDDDD;
+    background: radial-gradient(circle, #FFFFFF, #999999);
     border-radius: 50%;
     border: solid 2px rgba(0,0,0,0.75);
 
