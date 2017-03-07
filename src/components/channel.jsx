@@ -6,6 +6,7 @@ import { StopButton } from '../common/stopButton.jsx';
 import { MuteButton } from '../common/muteButton.jsx';
 import { LoopButton } from '../common/loopButton.jsx';
 import { Slider } from '../common/slider.jsx';
+import { Knob } from '../common/knob.jsx';
 import { Timer } from '../common/timer.jsx';
 
 export class Channel extends React.Component {
@@ -18,6 +19,7 @@ export class Channel extends React.Component {
       ready: true,
       status: "EMPTY",
       volume: 0.8,
+      pan: 0,
       muted: false,
       loop: false,
       name: this.props.name,
@@ -34,10 +36,6 @@ export class Channel extends React.Component {
 
     if(!this.state.ready) {
       return;
-    }
-
-    if(this.props.sound && this.state.status == "EMPTY") {
-      this.loadSound(this.props.sound);
     }
 
   }
@@ -116,6 +114,10 @@ export class Channel extends React.Component {
     this.howler.volume(this.state.volume);
   }
 
+  changePan() {
+    this.howler.stereo(this.state.pan);
+  }
+
   render() {
 
     // Loading screen
@@ -131,8 +133,11 @@ export class Channel extends React.Component {
     if(this.state.status == "EMPTY") {
       return (
           <div className="channel open-file">
-            <input type="file" id="open-local-file-input" onChange={this.handleOpenFile}></input>
-            <img src="./imgs/open-folder.svg" className="open-folder" onClick={this.handleOpenFile}></img>
+            <h1>Open local file</h1>
+            <input type="file" id="open-local-file-input" name="open-local-file-input" className="file-selector" onChange={this.handleOpenFile}></input>
+            <label htmlFor="open-local-file-input"></label>
+
+            <h1>Sound Library</h1>
           </div>
       );
     }
@@ -213,6 +218,21 @@ export class Channel extends React.Component {
       }
     };
 
+    const panProps = {
+      active: true,
+      minValue: -100,
+      maxValue: 100,
+      step: 5,
+      defaultValue: 0,
+      label: "PAN",
+      onChange: (newPan) => {
+        console.log("Pan changed!", newPan);
+        this.setState({
+          pan: newPan/100
+        }, this.changePan);
+      }
+    }
+
     return (
       <div className="channel">
         <div className="header">
@@ -239,6 +259,7 @@ export class Channel extends React.Component {
             <div className="buttons">
               <MuteButton {...muteProps}></MuteButton>
               <LoopButton {...loopProps}></LoopButton>
+              <Knob {...panProps}></Knob>
             </div>
           </div>
         </div>

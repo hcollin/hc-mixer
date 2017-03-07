@@ -1,5 +1,6 @@
 
 @import "slider";
+@import "knob";
 @import "duration";
 
 div.channel {
@@ -30,6 +31,34 @@ div.channel {
 
   &.open-file {
     justify-content: center;
+
+    & > h1 {
+      font-size: 14px;
+      color: lighten($channelBgColor, 40);
+      margin-top: 24px;
+
+      &:first-of-type {
+        margin-top: 0px;
+      }
+    }
+
+    .file-selector {
+      width: 0.1px;
+    	height: 0.1px;
+    	opacity: 0;
+    	overflow: hidden;
+    	position: absolute;
+    	z-index: -1;
+    }
+
+    .file-selector + label {
+      width: 112px;
+      height: 112px;
+      background-image: url('../public/imgs/open-folder.svg');
+      background-repeat: no-repeat;
+      cursor: pointer;
+    }
+
     img.open-folder {
         width: 112px;
         height: 112px;
@@ -72,7 +101,7 @@ div.channel {
   }
 
   div.main-content {
-    
+
     width: 100%;
     display: flex;
     flex-direction: column;
