@@ -8,21 +8,21 @@ export class Knob extends React.Component {
     const steps = absRange/this.props.step;
     const angChange = 270/steps;
 
-
-
-
-
     this.state = {
       active: this.props.active,
       value: this.props.defaultValue,
       absRange: absRange,
       steps: steps,
-      angChange: angChange
+      angChange: angChange,
+      mouseDown: false,
+      mouseStartX: false,
+      mousePrevX: false
 
     };
 
     this.handleMouseDown = this.handleMouseDown.bind(this);
     this.handleMouseUp = this.handleMouseUp.bind(this);
+    this.handleMouseMove = this.handleMouseMove.bind(this);
     this.handleWheelEvent = this.handleWheelEvent.bind(this);
 
   }
@@ -55,15 +55,50 @@ export class Knob extends React.Component {
   }
 
   handleMouseDown(e) {
-    console.log("Mouse Down!");
+    const ne = e.nativeEvent;
+    e.preventDefault();
+    this.setState({
+      mouseDown: true,
+      mouseStartX: ne.x,
+      mousePrevX: ne.x
+    });
+
   }
 
   handleMouseUp(e) {
-    console.log("Mouse Up!");
+    e.preventDefault();
+    this.setState({
+      mouseDown: false,
+      mouseStartX: false,
+      mousePrevX: false
+    });
+  }
+
+  handleMouseMove(e) {
+    const ne = e.nativeEvent;
+    e.preventDefault();
+    if(!this.state.mouseDown) {
+      return;
+    }
+
+    if(ne.x > this.state.mousePrevX) {
+      this.valueUp();
+    }
+    if(ne.x < this.state.mousePrevX) {
+      this.valueDown();
+    }
+    this.setState({
+      mousePrevX: ne.x
+    }, () => {
+
+    });
+
+
   }
 
   handleWheelEvent(e) {
     const we = e.nativeEvent;
+    e.preventDefault();
     if(we.deltaY > 0) {
       this.valueUp();
     } else {
@@ -76,6 +111,7 @@ export class Knob extends React.Component {
     const targetAngle = "rotate(" + ((270*currentPerc) - 135) + "deg)";
     return (
       <div className="knob-container">
+        <div className={this.state.mouseDown ? "mouse-move-plane active" : "mouse-move-plane"}  onMouseMove={this.handleMouseMove} onMouseLeave={this.handleMouseUp} onMouseUp={this.handleMouseUp} ></div>
         <div className="knob" onMouseDown={this.handleMouseDown} onMouseUp={this.handleMouseUp} onWheel={this.handleWheelEvent} style={{transform: targetAngle}}></div>
         <p className="min">{this.props.minValue}</p>
         <p className="max">{this.props.maxValue}</p>

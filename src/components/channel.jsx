@@ -226,7 +226,6 @@ export class Channel extends React.Component {
       defaultValue: 0,
       label: "PAN",
       onChange: (newPan) => {
-        console.log("Pan changed!", newPan);
         this.setState({
           pan: newPan/100
         }, this.changePan);
