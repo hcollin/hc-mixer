@@ -20,6 +20,8 @@ export class Channel extends React.Component {
       volume: 0.8,
       muted: false,
       loop: false,
+      name: this.props.name,
+      filename: "",
       durationText: "",
       muteIcon: ""
 
@@ -60,9 +62,6 @@ export class Channel extends React.Component {
             status: "STOP",
             durationText: (durationFullMins < 10 ? "0"+durationFullMins : durationFullMins) + ":" + (durationRestSec < 10 ? "0"+ durationRestSec: durationRestSec)
           }));
-
-
-
         },
         onend: () => {
           if(!this.state.looped) {
@@ -79,7 +78,18 @@ export class Channel extends React.Component {
   }
 
   handleOpenFile(e) {
-    this.loadSound(this.props.sound);
+    const  file = document.getElementById("open-local-file-input").files[0];
+    this.setState({
+      status: "LOADING",
+      ready: false,
+      filename: file['name']
+    }, () => {
+      let r = new FileReader();
+      r.addEventListener("load", () => {
+        this.loadSound(r.result)
+      }, false)
+      r.readAsDataURL(file);
+    });
   }
 
   play() {
@@ -121,6 +131,7 @@ export class Channel extends React.Component {
     if(this.state.status == "EMPTY") {
       return (
           <div className="channel open-file">
+            <input type="file" id="open-local-file-input" onChange={this.handleOpenFile}></input>
             <img src="./imgs/open-folder.svg" className="open-folder" onClick={this.handleOpenFile}></img>
           </div>
       );
@@ -205,8 +216,8 @@ export class Channel extends React.Component {
     return (
       <div className="channel">
         <div className="header">
-          <h1>{this.props.name}</h1>
-          <h2>{this.props.sound}</h2>
+          <h1>{this.state.name}</h1>
+          <h2>{this.state.filename}</h2>
         </div>
 
         <div className="main-content">
