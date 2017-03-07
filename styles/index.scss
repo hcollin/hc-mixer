@@ -1,0 +1,46 @@
+
+@import url('https://fonts.googleapis.com/css?family=Exo+2');
+
+$mainColor: black;
+$effectColor: DarkRed;
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+  background-color: BurlyWood;
+  color: $mainColor;
+  font-family: "Exo 2"
+}
+
+h1 {
+  color: $effectColor;
+}
+
+button.audio-button {
+
+  height: 64px;
+  width: 64px;
+  background-position: center center;
+  background-size: 48px;
+  background-repeat: no-repeat;
+  outline: none;
+  cursor: pointer;
+  border: none;
+  border-radius: 16px;
+  transition: all 0.2s;
+
+  &.play {
+    background-color: green;
+    background-image: url('../public/imgs/play.png');
+  }
+
+  &.stop {
+    background-color: red;
+    background-image: url('../public/imgs/stop.png');
+  }
+
+}
