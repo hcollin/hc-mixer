@@ -12,7 +12,9 @@ export class Channel extends React.Component {
 
   render() {
     return (
-      <div class="channel">
+      <div className="channel">
+        <h1>Channel X</h1>
+        <h2>{this.props.sound}</h2>
         <PlayButton sound={this.props.sound}></PlayButton>
 
       </div>
