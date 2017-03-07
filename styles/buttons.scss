@@ -1,0 +1,50 @@
+
+button.audio-button {
+  position: relative;
+  height: 32px;
+  width: 32px;
+  background-position: center center;
+  background-size: 24px;
+  background-repeat: no-repeat;
+  outline: none;
+  cursor: pointer;
+  border: solid 1px;
+  border-radius: 3px;
+  transition: all 0.2s;
+  margin: 2px;
+
+  &.play {
+    background-color: #668866;
+    border-color: darken(#668866, 30) darken(#668866, 40) darken(#668866, 40) darken(#668866, 30);
+    background-image: url('../public/imgs/play.png');
+  }
+
+  &.pause {
+    background-color: #888866;
+    border-color: darken(#888866, 30) darken(#888866, 40) darken(#888866, 40) darken(#888866, 30);
+    background-image: url('../public/imgs/pause.png');
+  }
+
+  &.stop {
+    background-color: #886666;
+    border-color: darken(#886666, 30) darken(#886666, 40) darken(#886666, 40) darken(#886666, 30);
+    background-image: url('../public/imgs/stop.png');
+  }
+
+  &.muted {
+    background-color: #AA4444;
+    border-color: darken(#AA4444, 30) darken(#AA4444, 40) darken(#AA4444, 40) darken(#AA4444, 30);
+    background-image: url('../public/imgs/speaker-off.svg');
+  }
+
+  &.not-muted {
+    background-color: #44AA44;
+    border-color: darken(#44AA44, 30) darken(#44AA44, 40) darken(#44AA44, 40) darken(#44AA44, 30);
+    background-image: url('../public/imgs/speaker.svg');
+  }
+
+  &.deactive {
+    opacity: 0.25;
+  }
+
+}

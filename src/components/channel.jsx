@@ -3,13 +3,22 @@ import 'howler';
 
 import { PlayButton } from '../common/playButton.jsx';
 import { StopButton } from '../common/stopButton.jsx';
+import { MuteButton } from '../common/muteButton.jsx';
 import { Slider } from '../common/slider.jsx';
+
 
 export class Channel extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = { playing: false, ready: false, status: "LOADING", volume: 0.8    }
+    // Initial state
+    this.state = {
+      playing: false,
+      ready: false,
+      status: "LOADING",
+      volume: 0.8,
+      muted: false
+    };
 
     this.howler = new Howl({
       src: [this.props.sound],
@@ -51,6 +60,11 @@ export class Channel extends React.Component {
     this.howler.stop();
   }
 
+  switchMute() {
+    console.log("Mute sound!");
+    this.howler.mute(this.state.muted);
+  }
+
   changeVolume() {
     this.howler.volume(this.state.volume);
   }
@@ -75,6 +89,16 @@ export class Channel extends React.Component {
 
       }
     };
+
+    const muteProps = {
+      muted: this.state.muted,
+      onClick: () => {
+        console.log("Mute clicked!");
+        this.setState( prevState => ({
+          muted: !prevState.muted
+        }), this.switchMute)
+      }
+    }
 
     const playProps = {
       value: this.state.playing,
@@ -119,8 +143,16 @@ export class Channel extends React.Component {
         </div>
 
         <div className="main-content">
+
+          <div className="volume-slider-container">
+            <Slider {...sliderProps}></Slider>
+            <div className="buttons">
+              <MuteButton {...muteProps}></MuteButton>
+            </div>
+          </div>
+
+
           {this.state.status}
-          <Slider {...sliderProps}></Slider>
         </div>
 
         <div className="footer-buttons">

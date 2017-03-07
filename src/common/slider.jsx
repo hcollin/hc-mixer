@@ -68,7 +68,7 @@ export class Slider extends React.Component {
 
     return (
       <div className="slider">
-        <div className="slider-button" onMouseDown={this.handleMouseDown} onMouseUp={this.handleMouseUp} onMouseLeave={this.handleMouseUp} onMouseMove={this.handleMouseMove} style={{top: topPx}}>
+        <div className="slider-button" onMouseDown={this.handleMouseDown} onMouseUp={this.handleMouseUp} onMouseMove={this.handleMouseMove} style={{top: topPx}}>
           {volume}%<br />
         </div>
       </div>

@@ -20,43 +20,7 @@ h1 {
   color: $effectColor;
 }
 
-button.audio-button {
-  position: relative;
-  height: 32px;
-  width: 32px;
-  background-position: center center;
-  background-size: 24px;
-  background-repeat: no-repeat;
-  outline: none;
-  cursor: pointer;
-  border: solid 1px;
-  border-radius: 3px;
-  transition: all 0.2s;
-  margin: 2px;
-
-  &.play {
-    background-color: #668866;
-    border-color: darken(#668866, 30) darken(#668866, 40) darken(#668866, 40) darken(#668866, 30);
-    background-image: url('../public/imgs/play.png');
-  }
-
-  &.pause {
-    background-color: #888866;
-    border-color: darken(#888866, 30) darken(#888866, 40) darken(#888866, 40) darken(#888866, 30);
-    background-image: url('../public/imgs/pause.png');
-  }
-
-  &.stop {
-    background-color: #886666;
-    border-color: darken(#886666, 30) darken(#886666, 40) darken(#886666, 40) darken(#886666, 30);
-    background-image: url('../public/imgs/stop.png');
-  }
-
-  &.deactive {
-    opacity: 0.25;
-  }
-
-}
 
 @import "channel";
+@import "buttons";
 @import "slider";
