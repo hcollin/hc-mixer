@@ -1,0 +1,7 @@
+
+# Ignore these folders
+/node_modules
+/.git
+
+# Ignore these files
+.babelrc
