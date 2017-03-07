@@ -21,6 +21,16 @@ div.channel {
   flex-direction: column;
   align-items: center;
 
+  &.loading {
+    justify-content: center;
+    img.loading-gears {
+        width: 112px;
+        height: 112px;
+    }
+  }
+
+
+
   h1 {
     height: 16px;
     width: 100%;
@@ -46,6 +56,23 @@ div.channel {
     background: repeating-linear-gradient(darken($channelBgColor, 40), darken($channelBgColor, 20) 3px);
     color: lighten($channelBgColor, 30);
     border-bottom: solid 1px darken($channelBgColor, 10);
+  }
+
+  div.header {
+    width: 100%;
+    height: 48px;
+  }
+
+  div.main-content {
+    flex: 1;
+  }
+
+  div.footer-buttons {
+    height: 96px;
+    width: 100%;
+    flex: 0 0 auto;
+
+    border-top: solid 1px darken($channelBgColor, 20);
   }
 
 }

@@ -19,9 +19,9 @@ export default class App extends React.Component {
           <h1>Tracker</h1>
         </header>
         <div className="mixer">
-          <Channel sound="./sounds/yao.mp3"></Channel>
-          <Channel sound="./sounds/rise.mp3"></Channel>
-          <Channel sound="./sounds/house.mp3"></Channel>
+          <Channel name="Yao People" sound="./sounds/yao.mp3"></Channel>
+          <Channel name="Rise" sound="./sounds/rise.mp3"></Channel>
+          <Channel name="House Techno" sound="./sounds/house.mp3"></Channel>
         </div>
 
       </div>
