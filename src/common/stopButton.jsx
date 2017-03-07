@@ -1,5 +1,4 @@
 import React from 'react';
-import 'howler';
 
 export class StopButton extends React.Component {
   constructor(props) {

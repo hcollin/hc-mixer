@@ -3,15 +3,17 @@ import 'howler';
 
 import { PlayButton } from '../common/playButton.jsx';
 import { StopButton } from '../common/stopButton.jsx';
+import { Slider } from '../common/slider.jsx';
 
 export class Channel extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = { playing: false, ready: false, status: "LOADING" }
+    this.state = { playing: false, ready: false, status: "LOADING", volume: 0.8    }
 
     this.howler = new Howl({
       src: [this.props.sound],
+      volume: this.state.volume,
       onload: () => {
         this.setState(prevState => ({
           playing: false,
@@ -35,17 +37,22 @@ export class Channel extends React.Component {
       return;
     }
 
-    if(this.state.status == "PLAY") {
-      this.howler.play();
-    }
+  }
 
-    if(this.state.status == "PAUSE") {
-      this.howler.pause();
-    }
+  play() {
+    this.howler.play();
+  }
 
-    if(this.state.status == "STOP") {
-      this.howler.stop();
-    }
+  pause() {
+    this.howler.pause();
+  }
+
+  stop() {
+    this.howler.stop();
+  }
+
+  changeVolume() {
+    this.howler.volume(this.state.volume);
   }
 
   render() {
@@ -64,7 +71,7 @@ export class Channel extends React.Component {
         this.setState( prevState => ({
           status: "STOP",
           playing: false
-        }));
+        }), this.stop);
 
       }
     };
@@ -79,15 +86,25 @@ export class Channel extends React.Component {
             this.setState(prevState => ( {
               status: "PLAY",
               playing: true
-            }));
+            }), this.play);
             break;
           case "PLAY":
             this.setState(prevState => ( {
               status: "PAUSE",
               playing: true
-            }));
+            }), this.pause);
             break;
         }
+      }
+    };
+
+    const sliderProps = {
+      value: this.state.volume,
+      active: this.state.ready,
+      onChange: (newVal) => {
+        this.setState(prevState => ({
+          volume: newVal
+        }), this.changeVolume);
       }
     };
 
@@ -103,6 +120,7 @@ export class Channel extends React.Component {
 
         <div className="main-content">
           {this.state.status}
+          <Slider {...sliderProps}></Slider>
         </div>
 
         <div className="footer-buttons">

@@ -1,5 +1,4 @@
 import React from 'react';
-import 'howler';
 
 export class PlayButton extends React.Component {
   constructor(props) {
@@ -17,7 +16,7 @@ export class PlayButton extends React.Component {
 
   render() {
     const showPauseButton = this.props.status == "PLAY" ? true : false;
-    
+
 
     return (
       <button className={showPauseButton ? "audio-button pause" : "audio-button play"} onClick={this.handleClick}></button>
