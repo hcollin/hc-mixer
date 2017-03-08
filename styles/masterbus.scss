@@ -1,0 +1,11 @@
+
+div.master-bus {
+  position: relative;
+
+  width: 96px;
+
+  & > .channel {
+    width: 96px;
+  }
+
+}

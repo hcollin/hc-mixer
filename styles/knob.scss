@@ -102,4 +102,45 @@ div.knob-container {
     color: rgba(16, 32, 96, 0.85);
   }
 
+  &.large {
+    width: 100%;
+    height: 152px;
+    margin: 12px 0;
+    padding: 3px 0;
+    border: none;
+
+    .knob {
+      width: 104px;
+      height: 104px;
+      background: radial-gradient(circle, #FFFFFF, #999999);
+      border: solid 2px rgba(0,0,0,0.75);
+
+      transform: rotate(0deg);
+      transition: all 0.1s;
+
+      &::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 51px;
+        height: 51px;
+        width: 3px;
+      }
+    }
+
+    p {
+      top: 65%;
+      font-size: 14px;
+      width: 32px;
+    }
+
+    span.value {
+      font-size: 18px;
+      color: rgba(255,255,255, 0.8);
+      margin-top: 2px;
+    }
+
+
+
+  }
 }

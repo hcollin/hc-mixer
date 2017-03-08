@@ -5,6 +5,8 @@ import { PlayButton } from '../common/playButton.jsx';
 import { StopButton } from '../common/stopButton.jsx';
 import { MuteButton } from '../common/muteButton.jsx';
 import { LoopButton } from '../common/loopButton.jsx';
+import { AudioButton } from '../common/audioButton.jsx';
+import { CancelButton } from '../common/cancelButton.jsx';
 import { Slider } from '../common/slider.jsx';
 import { Knob } from '../common/knob.jsx';
 import { Timer } from '../common/timer.jsx';
@@ -15,6 +17,7 @@ export class Channel extends React.Component {
 
     // Initial state
     this.state = {
+      id: this.props.no,
       playing: false,
       ready: true,
       status: "EMPTY",
@@ -103,6 +106,10 @@ export class Channel extends React.Component {
     this.howler.stop();
   }
 
+  seek(target) {
+    this.howler.seek(target);
+  }
+
   switchMute() {
     this.howler.mute(this.state.muted);
   }
@@ -134,6 +141,15 @@ export class Channel extends React.Component {
       );
     }
 
+    const cancelProps = {
+      onClick: () => {
+        if(this.howler) {
+            this.howler.unload();
+        }
+        this.props.remove(this.props.no);
+      }
+    };
+
     // Open File screen
     if(this.state.status == "EMPTY") {
       return (
@@ -143,6 +159,8 @@ export class Channel extends React.Component {
             <label htmlFor="open-local-file-input"></label>
 
             <h1>Sound Library</h1>
+
+            <CancelButton {...cancelProps}></CancelButton>
           </div>
       );
     }
@@ -245,12 +263,58 @@ export class Channel extends React.Component {
       defaultValue: 100,
       label: "SPEED",
       onChange: (newSpeed) => {
-        console.log("newSpeed", newSpeed);
         this.setState({
           speed: newSpeed/100
         }, this.changeSpeed);
       }
     };
+
+
+
+    const forwardProps = {
+      active: true,
+      classes: "forward",
+      onClick: () => {
+        console.log("Forward!");
+        let  fow = this.howler.seek() + 5;
+        if(fow > this.howler.duration()) {
+          fow = this.howler.duration() - 1;
+        }
+        this.seek(fow);
+      }
+    }
+
+    const rewindProps = {
+      active: true,
+      classes: "rewind",
+      onClick: () => {
+        console.log("Rewind!");
+        let rew = this.howler.seek() - 5;
+        if(rew < 0 ) {
+          rew = 0;
+        }
+        this.seek(rew);
+      }
+    }
+
+    const timeKnob = {
+      active: this.state.playing,
+      minValue: 0,
+      maxValue: Math.floor(this.howler.duration()),
+      step: 1,
+      defaultValue: 0,
+      passiveValue: 0,
+      automated: true,
+      onTick: () => {
+        return this.howler.seek();
+      },
+      ticking: this.state.playing,
+      label: "TIME",
+      classes: "large",
+      onChange: (newPosition) => {
+        this.seek(newPosition);
+      }
+    }
 
 
     return (
@@ -278,7 +342,7 @@ export class Channel extends React.Component {
             <Slider {...sliderProps}></Slider>
             <div className="buttons">
               <MuteButton {...muteProps}></MuteButton>
-              <LoopButton {...loopProps}></LoopButton>
+
               <Knob {...panProps}></Knob>
               <Knob {...speedProps}></Knob>
             </div>
@@ -288,6 +352,15 @@ export class Channel extends React.Component {
         <div className="footer-buttons">
           <PlayButton {...playProps}></PlayButton>
           <StopButton {...stopProps}></StopButton>
+          <LoopButton {...loopProps}></LoopButton>
+
+          <AudioButton {...rewindProps}></AudioButton>
+          <AudioButton {...forwardProps}></AudioButton>
+
+          <Knob {...timeKnob}></Knob>
+
+
+          <CancelButton {...cancelProps}></CancelButton>
         </div>
 
       </div>

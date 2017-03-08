@@ -4,6 +4,8 @@
 $mainColor: black;
 $effectColor: DarkRed;
 
+$channelBgColor: #555555;
+
 *, *::after, *::before {
     margin: 0;
     padding: 0;
@@ -11,16 +13,37 @@ $effectColor: DarkRed;
 }
 
 body {
-  background-color: BurlyWood;
+  background-color: #222222;
   color: $mainColor;
   font-family: "Exo 2"
 }
+
+
+
 
 h1 {
   color: $effectColor;
 }
 
+div.mixing-desk {
+  position: relative;
+
+  width: 100%;
+
+  display: flex;
+  flex-direction: row;
+
+  & > .mixer {
+    flex: 1 1 auto;
+  }
+
+  & > .master-bus {
+    flex: 0 0 auto;
+  }
+
+}
 
 
+@import "masterbus";
 @import "mixer";
 @import "buttons";

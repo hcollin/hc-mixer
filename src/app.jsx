@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { Mixer } from './components/mixer.jsx';
+import { MasterBus } from './components/masterBus.jsx';
 
 
 // Styles
@@ -16,9 +17,13 @@ export default class App extends React.Component {
 
       <div className="root-container">
         <header>
-          <h1>Tracker</h1>
+          
         </header>
-        <Mixer></Mixer>
+        <div className="mixing-desk">
+          <Mixer></Mixer>
+          <MasterBus></MasterBus>
+        </div>
+
 
       </div>
     )

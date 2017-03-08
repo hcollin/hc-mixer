@@ -1,9 +1,9 @@
 
 div.mixer {
 
- $mixerBgColor: #333333;
+  $mixerBgColor: #333333;
 
- position: relative;
+  position: relative;
 
   display: flex;
   flex-direction: row;
@@ -39,7 +39,7 @@ div.mixer {
     z-index: 10;
 
     width: 64px;
-    height: 560px;
+    height: 720px;
 
     display: flex;
     flex-direction: column;

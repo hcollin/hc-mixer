@@ -5,14 +5,14 @@
 
 div.channel {
 
-  $channelBgColor: #555555;
+
 
   position: relative;
   z-index: 20;
 
   flex: 0 0 auto;
   width: 128px;
-  height: 560px;
+  height: 720px;
   background: linear-gradient($channelBgColor 0, darken($channelBgColor, 10) 100%);
   border: solid 2px;
   border-color: darken($channelBgColor, 10) darken($channelBgColor, 20) darken($channelBgColor, 20) darken($channelBgColor, 10);
@@ -132,6 +132,13 @@ div.channel {
     flex: 0 0 auto;
 
     border-top: solid 1px darken($channelBgColor, 20);
+
+
+    button.cancel-button {
+      position: absolute;
+      bottom: 0;
+      right: 0;
+    }
   }
 
 }

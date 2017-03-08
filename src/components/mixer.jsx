@@ -13,11 +13,10 @@ export class Mixer extends React.Component {
     };
 
     this.handleNewChannel = this.handleNewChannel.bind(this);
+    this.handleRemoveChannel = this.handleRemoveChannel.bind(this);
   }
 
   handleNewChannel() {
-    console.log("New Channel");
-
 
     this.setState(prevState => {
       const newChannel = {
@@ -35,6 +34,18 @@ export class Mixer extends React.Component {
 
       }
     })
+  }
+
+  handleRemoveChannel(removeMe) {
+    console.log("Remove ", removeMe);
+    this.setState(prevState => {
+      var newChannels = prevState.channels.filter((item) => {
+        return item.no !== removeMe;
+      });
+      return {
+        channels: newChannels
+      };
+    });
 
   }
 
@@ -64,7 +75,7 @@ export class Mixer extends React.Component {
         <p>MIXER</p>
         {
           this.state.channels.map((item) => (
-            <Channel name={item.name} sound={item.sound} key={item.no}></Channel>
+            <Channel name={item.name} sound={item.sound} key={item.no} no={item.no} remove={this.handleRemoveChannel}></Channel>
           ))
         }
         {addChannel}
