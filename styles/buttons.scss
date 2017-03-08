@@ -77,6 +77,14 @@ button.audio-button {
     }
   }
 
+  &.counter {
+    background-color: #666688;
+    border-color: darken(#666688, 30) darken(#666688, 40) darken(#666688, 40) darken(#666688, 30);
+    color: white;
+    font-weight: bold;
+    font-size: 20px;
+  }
+
   &.deactive {
     opacity: 0.25;
   }

@@ -43,7 +43,19 @@ div.mixing-desk {
 
 }
 
+div.tool-section {
+  position: relative;
+  width: 100%;
+
+  margin-top: 6px;
+
+  display: flex;
+  flex-direction: row;
+
+}
+
+@import "buttons";
 
 @import "masterbus";
 @import "mixer";
-@import "buttons";
+@import "pads";

@@ -2,7 +2,7 @@ import React from 'react';
 
 import { Mixer } from './components/mixer.jsx';
 import { MasterBus } from './components/masterBus.jsx';
-
+import { Pads } from './components/pads.jsx';
 
 // Styles
 import '../styles/index.scss';
@@ -19,19 +19,6 @@ export default class App extends React.Component {
 
 
   render() {
-
-    const masterBusProps = {
-      command: (command, attrs) => {
-        console.log("Master Bus Command: ", command, attrs);
-      }
-    }
-
-    const mixerProps = {
-      command: (command, attrs) => {
-        console.log("Mixer Command: ", command, attrs);
-      }
-    }
-
     return (
 
       <div className="root-container">
@@ -39,8 +26,12 @@ export default class App extends React.Component {
 
         </header>
         <div className="mixing-desk">
-          <Mixer {...mixerProps}></Mixer>
-          <MasterBus {...masterBusProps}></MasterBus>
+          <Mixer></Mixer>
+          <MasterBus></MasterBus>
+        </div>
+
+        <div className="tool-section">
+          <Pads></Pads>
         </div>
 
 

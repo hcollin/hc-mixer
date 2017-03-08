@@ -6,6 +6,7 @@ import { StopButton } from '../common/stopButton.jsx';
 import { MuteButton } from '../common/muteButton.jsx';
 import { LoopButton } from '../common/loopButton.jsx';
 import { AudioButton } from '../common/audioButton.jsx';
+import { CountButton } from '../common/countButton.jsx';
 import { CancelButton } from '../common/cancelButton.jsx';
 import { Slider } from '../common/slider.jsx';
 import { Knob } from '../common/knob.jsx';
@@ -33,6 +34,7 @@ export class Channel extends React.Component {
       durationText: "",
       multiplay: false,
       muteIcon: "",
+      padLink: false,
       commandService: new CommandService()
     };
 
@@ -50,7 +52,6 @@ export class Channel extends React.Component {
   }
 
   componentWillUnmount() {
-    console.log(this.subscriptions.length);
     for(let i = 0; i < this.subscriptions.length; i++) {
         this.subscriptions[i]();
     }
@@ -80,6 +81,18 @@ export class Channel extends React.Component {
 
           this.subscriptions.push(this.state.commandService.on("STOP_ALL", () => {
             this.stop();
+          }));
+
+          this.subscriptions.push(this.state.commandService.on("PLAY_CHANNEL", (channelid) => {
+              if(channelid == this.state.padLink) {
+                this.play();
+              }
+          }));
+
+          this.subscriptions.push(this.state.commandService.on("STOP_CHANNEL", (channelid) => {
+              if(channelid == this.state.padLink) {
+                this.stop();
+              }
           }));
 
           this.setState(prevState => ({
@@ -365,6 +378,28 @@ export class Channel extends React.Component {
       }
     }
 
+    const countPadProps = {
+      active: true,
+      counter: this.state.padLink,
+      onClick: () => {
+        this.setState(prevState => {
+          let newVal = prevState.padLink;
+
+          if(newVal == false) {
+            newVal = 0;
+          }
+          newVal++;
+          if (newVal > 9) {
+            newVal = false;
+          }
+
+          return {
+            padLink: newVal
+          };
+        });
+      }
+    }
+
 
     return (
       <div className="channel">
@@ -394,6 +429,7 @@ export class Channel extends React.Component {
             <Slider {...sliderProps}></Slider>
             <div className="buttons">
               <MuteButton {...muteProps}></MuteButton>
+              <CountButton {...countPadProps}></CountButton>
 
               <Knob {...panProps}></Knob>
               <Knob {...speedProps}></Knob>
@@ -410,8 +446,10 @@ export class Channel extends React.Component {
           <AudioButton {...forwardProps}></AudioButton>
           <AudioButton {...multiplayProps}></AudioButton>
 
-          <Knob {...timeKnob}></Knob>
 
+
+
+          <Knob {...timeKnob}></Knob>
 
           <CancelButton {...cancelProps}></CancelButton>
         </div>

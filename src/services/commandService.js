@@ -15,7 +15,7 @@ export class CommandService {
     return _instanceCommandService;
   }
 
-  trigger(key) {
+  trigger(key, attrs=false) {
     if(!this.subscriptions[key]) {
       return;
     }
@@ -23,7 +23,12 @@ export class CommandService {
     const calls = this.subscriptions[key];
     for(let i = 0; i < calls.length; i++) {
         const sub = calls[i];
-        sub['callback']();
+        if(attrs) {
+            sub['callback'](attrs);
+        } else {
+            sub['callback']();
+        }
+
     }
 
   }
@@ -51,7 +56,7 @@ export class CommandService {
     this.subscriptions[key] = this.subscriptions[key].filter((item) => {
       return item.id != id;
     });
-    
+
   }
 
 

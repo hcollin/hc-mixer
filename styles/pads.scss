@@ -1,0 +1,91 @@
+
+div.pads {
+
+  position: relative;
+  width: 202px;
+  height: 226px;
+
+  margin: 0;
+  padding: 0 2px;
+
+  flex: 0 0 auto;
+
+  background: $channelBgColor;
+  border: solid 3px;
+  border-color: darken($channelBgColor, 10) darken($channelBgColor, 20) darken($channelBgColor, 20) darken($channelBgColor, 10);
+
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+
+  box-sizing: border-box;
+
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
+
+
+  &.active {
+    $activeBorderColor: #558855;
+    border-color: darken($activeBorderColor, 10) darken($activeBorderColor, 20) darken($activeBorderColor, 20) darken($activeBorderColor, 10);
+  }
+
+  header {
+    position: relative;
+    height: 22px;
+    width: 100%;
+    flex: 0 0 auto;
+    color: darken($channelBgColor, 20);
+    text-align: center;
+    font-size: 14px;
+    font-weight: bold;
+    line-height: 22px;
+
+    small {
+      font-size: 10px;
+      font-style: italic;
+    }
+  }
+
+  footer {
+    height: 4px;
+    width :100%;
+    flex: 0 0 auto;
+  }
+
+  div.pad {
+    width: 64px;
+    height: 64px;
+    background-color: lighten($channelBgColor, 20);
+    border: solid 1px;
+    border-color: darken($channelBgColor, 0) darken($channelBgColor, 10) darken($channelBgColor, 10) darken($channelBgColor, 0);
+
+    flex: 0 0 auto;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    margin: 0;
+    padding: 0;
+
+    box-sizing: border-box;
+
+    user-select: none;
+
+    cursor:pointer;
+
+    label {
+      color: $channelBgColor;
+      font-size: 36px;
+      font-weight: bold;
+      user-select: none;
+    }
+
+    &.active {
+      background-color: lighten($channelBgColor, 50);
+    }
+
+  }
+}
