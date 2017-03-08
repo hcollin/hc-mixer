@@ -66,6 +66,17 @@ button.audio-button {
     background-image: url('../public/imgs/rewind.png');
   }
 
+  &.multiplay {
+    background-color: #AA4444;
+    border-color: darken(#AA4444, 30) darken(#AA4444, 40) darken(#AA4444, 40) darken(#AA4444, 30);
+    background-image: url('../public/imgs/multiplay.svg');
+
+    &.active {
+      background-color: #44AA44;
+      border-color: darken(#44AA44, 30) darken(#44AA44, 40) darken(#44AA44, 40) darken(#44AA44, 30);
+    }
+  }
+
   &.deactive {
     opacity: 0.25;
   }

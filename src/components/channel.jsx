@@ -31,6 +31,7 @@ export class Channel extends React.Component {
       name: this.props.name,
       filename: "",
       durationText: "",
+      multiplay: false,
       muteIcon: "",
       commandService: new CommandService()
     };
@@ -46,18 +47,6 @@ export class Channel extends React.Component {
     if(!this.state.ready) {
       return;
     }
-
-    if(prevState.status != this.state.status) {
-      console.log("Status Changed", prevState.status, this.state.status);
-      if(this.state.status =="PLAY" && this.state.playing == false) {
-        console.log("Start Playing! ", this.state.id);
-      }
-
-      if(this.state.status =="STOP" && this.state.playing == true) {
-        console.log("Stop Playing!", this.state.id);
-      }
-    }
-
   }
 
   componentWillUnmount() {
@@ -130,7 +119,8 @@ export class Channel extends React.Component {
   }
 
   play() {
-    if(this.state.status == "PLAY") {
+
+    if(this.state.multiplay == false && this.state.status == "PLAY") {
       return;
     }
     this.howler.play();
@@ -150,9 +140,6 @@ export class Channel extends React.Component {
   }
 
   stop() {
-    if(this.state.status == "STOP") {
-      return;
-    }
     this.howler.stop();
     this.setState( prevState => ({
       status: "STOP",
@@ -258,15 +245,20 @@ export class Channel extends React.Component {
     const playProps = {
       value: this.state.playing,
       status: this.state.status,
+      multiplay: this.state.multiplay,
       onClick: () => {
-        switch(this.state.status) {
-          case "STOP":
-          case "PAUSE":
-            this.play();
-            break;
-          case "PLAY":
-            this.pause();
-            break;
+        if(this.state.multiplay) {
+          this.play();
+        } else {
+          switch(this.state.status) {
+            case "STOP":
+            case "PAUSE":
+              this.play();
+              break;
+            case "PLAY":
+              this.pause();
+              break;
+          }
         }
       }
     };
@@ -362,6 +354,17 @@ export class Channel extends React.Component {
       }
     }
 
+    const multiplayProps = {
+      active: true,
+      classes: "multiplay",
+      isactive: this.state.multiplay,
+      onClick: () => {
+        this.setState(prevState => ({
+          multiplay: !prevState.multiplay
+        }));
+      }
+    }
+
 
     return (
       <div className="channel">
@@ -380,6 +383,9 @@ export class Channel extends React.Component {
               }
               {this.state.looped &&
                 <img src="./imgs/looping-white.svg"></img>
+              }
+              {this.state.multiplay &&
+                <img src="./imgs/multiplay_white.svg"></img>
               }
             </span>
             <span className="status">{this.state.status}</span>
@@ -402,6 +408,7 @@ export class Channel extends React.Component {
 
           <AudioButton {...rewindProps}></AudioButton>
           <AudioButton {...forwardProps}></AudioButton>
+          <AudioButton {...multiplayProps}></AudioButton>
 
           <Knob {...timeKnob}></Knob>
 

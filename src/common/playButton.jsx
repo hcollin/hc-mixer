@@ -8,14 +8,20 @@ export class PlayButton extends React.Component {
   }
 
   handleClick(e) {
-    this.setState(prevState => ({
-      paused: !prevState.paused
-    }));
+    if(this.props.multiplay) {
+      this.setState({
+        paused: false
+      });
+    } else {
+      this.setState(prevState => ({
+        paused: !prevState.paused
+      }));
+    }
     this.props.onClick();
   }
 
   render() {
-    const showPauseButton = this.props.status == "PLAY" ? true : false;
+    const showPauseButton = this.props.status == "PLAY" && this.props.multiplay == false ? true : false;
 
 
     return (

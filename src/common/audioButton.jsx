@@ -15,7 +15,7 @@ export class AudioButton extends React.Component {
   }
 
   render() {
-    const classes = "audio-button " + this.props.classes + (this.props.active ? " " : " deactive");
+    const classes = "audio-button " + (this.props.isactive ? "active " : "") + this.props.classes + (this.props.active ? " " : " deactive");
     return (
       <button className={classes} onClick={this.handleClick}></button>
     )
