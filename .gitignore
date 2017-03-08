@@ -6,3 +6,5 @@
 # Ignore these files
 .babelrc
 *.mp3
+npm-debug.log
+*.psd
