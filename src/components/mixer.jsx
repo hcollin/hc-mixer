@@ -46,8 +46,9 @@ export class Mixer extends React.Component {
         channels: newChannels
       };
     });
-
   }
+
+
 
   render() {
 

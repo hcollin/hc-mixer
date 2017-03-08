@@ -11,6 +11,8 @@ import { Slider } from '../common/slider.jsx';
 import { Knob } from '../common/knob.jsx';
 import { Timer } from '../common/timer.jsx';
 
+import { CommandService } from '../services/commandService.js';
+
 export class Channel extends React.Component {
   constructor(props) {
     super(props);
@@ -29,9 +31,12 @@ export class Channel extends React.Component {
       name: this.props.name,
       filename: "",
       durationText: "",
-      muteIcon: ""
-
+      muteIcon: "",
+      commandService: new CommandService()
     };
+
+    this.subscriptions = [];
+
 
     this.handleOpenFile = this.handleOpenFile.bind(this);
   }
@@ -42,7 +47,28 @@ export class Channel extends React.Component {
       return;
     }
 
+    if(prevState.status != this.state.status) {
+      console.log("Status Changed", prevState.status, this.state.status);
+      if(this.state.status =="PLAY" && this.state.playing == false) {
+        console.log("Start Playing! ", this.state.id);
+      }
+
+      if(this.state.status =="STOP" && this.state.playing == true) {
+        console.log("Stop Playing!", this.state.id);
+      }
+    }
+
   }
+
+  componentWillUnmount() {
+    console.log(this.subscriptions.length);
+    for(let i = 0; i < this.subscriptions.length; i++) {
+        this.subscriptions[i]();
+    }
+
+  }
+
+
 
   loadSound(filename) {
     this.setState(prevState => ({
@@ -57,6 +83,15 @@ export class Channel extends React.Component {
           const fullDurationInSec = Math.round(this.howler.duration());
           const durationFullMins = Math.floor(fullDurationInSec/60);
           const durationRestSec = fullDurationInSec - (durationFullMins * 60);
+
+          // Trigger on play all
+          this.subscriptions.push(this.state.commandService.on("PLAY_ALL", () => {
+            this.play();
+          }));
+
+          this.subscriptions.push(this.state.commandService.on("STOP_ALL", () => {
+            this.stop();
+          }));
 
           this.setState(prevState => ({
             playing: false,
@@ -95,15 +130,34 @@ export class Channel extends React.Component {
   }
 
   play() {
+    if(this.state.status == "PLAY") {
+      return;
+    }
     this.howler.play();
+    this.setState(prevState => ( {
+      status: "PLAY",
+      playing: true
+    }));
+
   }
 
   pause() {
     this.howler.pause();
+    this.setState(prevState => ( {
+      status: "PAUSE",
+      playing: true
+    }));
   }
 
   stop() {
+    if(this.state.status == "STOP") {
+      return;
+    }
     this.howler.stop();
+    this.setState( prevState => ({
+      status: "STOP",
+      playing: false
+    }));
   }
 
   seek(target) {
@@ -208,16 +262,10 @@ export class Channel extends React.Component {
         switch(this.state.status) {
           case "STOP":
           case "PAUSE":
-            this.setState(prevState => ( {
-              status: "PLAY",
-              playing: true
-            }), this.play);
+            this.play();
             break;
           case "PLAY":
-            this.setState(prevState => ( {
-              status: "PAUSE",
-              playing: true
-            }), this.pause);
+            this.pause();
             break;
         }
       }
@@ -275,7 +323,6 @@ export class Channel extends React.Component {
       active: true,
       classes: "forward",
       onClick: () => {
-        console.log("Forward!");
         let  fow = this.howler.seek() + 5;
         if(fow > this.howler.duration()) {
           fow = this.howler.duration() - 1;
@@ -288,7 +335,6 @@ export class Channel extends React.Component {
       active: true,
       classes: "rewind",
       onClick: () => {
-        console.log("Rewind!");
         let rew = this.howler.seek() - 5;
         if(rew < 0 ) {
           rew = 0;

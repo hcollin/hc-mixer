@@ -32,10 +32,8 @@ export class Knob extends React.Component {
 
   componentDidUpdate() {
 
-    console.log(this.props.active, this.props.automated, this.state.ticker);
-
     if(this.props.active && this.props.automated && this.state.ticker == false) {
-      console.log("Start interval!");
+
       this.state.ticker = setInterval(() => {
           if(!this.state.mouseDown) {
             this.setState({
@@ -46,7 +44,7 @@ export class Knob extends React.Component {
     }
 
     if(!this.props.active && this.props.automated && this.state.ticker != false) {
-      console.log("Stop interval!");
+
       if(this.props.automated) {
         clearInterval(this.state.ticker);
         this.state.ticker = false;
@@ -144,7 +142,7 @@ export class Knob extends React.Component {
     }
     const currentPerc = (value - this.props.minValue) / (this.props.maxValue - this.props.minValue);
     const targetAngle = "rotate(" + ((270*currentPerc) - 135) + "deg)";
-    console.log(targetAngle , this.state.value, this.state.passiveValue);
+    
     return (
       <div className={this.state.classes}>
         <div className={this.state.mouseDown ? "mouse-move-plane active" : "mouse-move-plane"}  onMouseMove={this.handleMouseMove} onMouseLeave={this.handleMouseUp} onMouseUp={this.handleMouseUp} ></div>

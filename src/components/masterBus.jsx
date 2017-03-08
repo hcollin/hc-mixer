@@ -6,8 +6,9 @@ import { Channel } from './channel.jsx';
 import { Slider } from '../common/slider.jsx';
 import { Knob } from '../common/knob.jsx';
 import { MuteButton } from '../common/muteButton.jsx';
+import { AudioButton } from '../common/audioButton.jsx';
 
-
+import { CommandService } from '../services/commandService.js';
 
 export class MasterBus extends React.Component {
   constructor(props) {
@@ -16,7 +17,9 @@ export class MasterBus extends React.Component {
     this.state = {
       volume: 0.8,
       muted: false,
-      pan: 0
+      pan: 0,
+      masterCommand: false,
+      commandService: new CommandService()
     };
 
   }
@@ -72,6 +75,25 @@ export class MasterBus extends React.Component {
       }
     };
 
+    const playAllProps = {
+      active: true,
+      classes: "play",
+      onClick: () => {
+        console.log("Play All!");
+        this.state.commandService.trigger("PLAY_ALL");
+
+      }
+    };
+
+    const stopAllProps = {
+      active: true,
+      classes: "stop",
+      onClick: () => {
+        console.log("Stop All!");
+        this.state.commandService.trigger("STOP_ALL");
+      }
+    }
+
 
     return (
       <div className="master-bus">
@@ -88,6 +110,8 @@ export class MasterBus extends React.Component {
 
           <div className="footer-buttons">
               <MuteButton {...muteProps}></MuteButton>
+              <AudioButton {...playAllProps}></AudioButton>
+              <AudioButton {...stopAllProps}></AudioButton>
           </div>
 
         </div>
