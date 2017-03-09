@@ -6,6 +6,7 @@ $effectColor: DarkRed;
 
 $channelBgColor: #555555;
 
+
 *, *::after, *::before {
     margin: 0;
     padding: 0;
@@ -21,10 +22,6 @@ body {
 
 
 
-h1 {
-  color: $effectColor;
-}
-
 div.mixing-desk {
   position: relative;
 
@@ -32,6 +29,8 @@ div.mixing-desk {
 
   display: flex;
   flex-direction: row;
+
+  overflow: hidden;
 
   & > .mixer {
     flex: 1 1 auto;
@@ -53,9 +52,11 @@ div.tool-section {
   flex-direction: row;
 
 }
-
+@import "mixins";
 @import "buttons";
 
+@import "mainheader";
 @import "masterbus";
 @import "mixer";
+@import "tracker";
 @import "pads";

@@ -37,7 +37,6 @@ export class Mixer extends React.Component {
   }
 
   handleRemoveChannel(removeMe) {
-    console.log("Remove ", removeMe);
     this.setState(prevState => {
       var newChannels = prevState.channels.filter((item) => {
         return item.no !== removeMe;

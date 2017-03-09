@@ -1,0 +1,30 @@
+
+@mixin toolheader() {
+
+  & > header {
+    background: linear-gradient($channelBgColor 0%, lighten($channelBgColor, 20) 25%, darken($channelBgColor, 20) 50%, darken($channelBgColor, 10) 100%);
+    border-top-right-radius: 8px;
+    border-top-left-radius: 8px;
+
+    box-shadow: 0 0 8px 4px rgba(0, 0, 0, 0.5);
+    z-index: 100;
+
+    width: 100%;
+
+    h1 {
+      font-size: 14px;
+      font-weight: bold;
+      color: rgba(255, 255, 255, 0.6);
+      padding: 2px 6px;
+      margin: 0 12px;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+
+      background-color: rgba(32, 0, 0, 0.4);
+      border-left: solid 2px rgba(64, 0, 0, 0.5);
+      border-right: solid 2px rgba(64, 0, 0, 0.5);
+
+      display: inline-block;
+    }
+  }
+}

@@ -30,6 +30,12 @@ export class Knob extends React.Component {
 
   }
 
+  componentWillUnmount() {
+    if(this.state.ticker) {
+        clearInterval(this.state.ticker);
+    }
+  }
+
   componentDidUpdate() {
 
     if(this.props.active && this.props.automated && this.state.ticker == false) {
@@ -142,7 +148,7 @@ export class Knob extends React.Component {
     }
     const currentPerc = (value - this.props.minValue) / (this.props.maxValue - this.props.minValue);
     const targetAngle = "rotate(" + ((270*currentPerc) - 135) + "deg)";
-    
+
     return (
       <div className={this.state.classes}>
         <div className={this.state.mouseDown ? "mouse-move-plane active" : "mouse-move-plane"}  onMouseMove={this.handleMouseMove} onMouseLeave={this.handleMouseUp} onMouseUp={this.handleMouseUp} ></div>

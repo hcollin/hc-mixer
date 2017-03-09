@@ -5,7 +5,7 @@ div.pads {
   width: 202px;
   height: 226px;
 
-  margin: 0;
+  margin: 0 2px;
   padding: 0 2px;
 
   flex: 0 0 auto;
@@ -31,22 +31,8 @@ div.pads {
     border-color: darken($activeBorderColor, 10) darken($activeBorderColor, 20) darken($activeBorderColor, 20) darken($activeBorderColor, 10);
   }
 
-  header {
-    position: relative;
-    height: 22px;
-    width: 100%;
-    flex: 0 0 auto;
-    color: darken($channelBgColor, 20);
-    text-align: center;
-    font-size: 14px;
-    font-weight: bold;
-    line-height: 22px;
 
-    small {
-      font-size: 10px;
-      font-style: italic;
-    }
-  }
+  @include toolheader();
 
   footer {
     height: 4px;

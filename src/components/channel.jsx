@@ -55,6 +55,10 @@ export class Channel extends React.Component {
     for(let i = 0; i < this.subscriptions.length; i++) {
         this.subscriptions[i]();
     }
+    if(this.howler) {
+        this.howler.stop();
+        this.howler.unload();
+    }
 
   }
 
@@ -91,6 +95,7 @@ export class Channel extends React.Component {
 
           this.subscriptions.push(this.state.commandService.on("STOP_CHANNEL", (channelid) => {
               if(channelid == this.state.padLink) {
+                console.log("STOP ME!", channelid);
                 this.stop();
               }
           }));
@@ -103,12 +108,17 @@ export class Channel extends React.Component {
           }));
         },
         onend: () => {
+          console.log("STOP HOWLER AT THE END", this.howler.playing());
           if(!this.state.looped) {
-            this.setState(prevState => ({
-              playing: false,
-              ready: true,
-              status: "STOP"
-            }));
+            if(this.state.multiplay && this.howler.playing()) {
+
+            } else {
+              this.setState(prevState => ({
+                playing: false,
+                ready: true,
+                status: "STOP"
+              }));
+            }
           }
         }
       });
@@ -134,7 +144,8 @@ export class Channel extends React.Component {
   play() {
 
     if(this.state.multiplay == false && this.state.status == "PLAY") {
-      return;
+      this.stop();
+      // return;
     }
     this.howler.play();
     this.setState(prevState => ( {
@@ -197,9 +208,7 @@ export class Channel extends React.Component {
 
     const cancelProps = {
       onClick: () => {
-        if(this.howler) {
-            this.howler.unload();
-        }
+
         this.props.remove(this.props.no);
       }
     };

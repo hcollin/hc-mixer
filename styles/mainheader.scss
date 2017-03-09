@@ -1,0 +1,32 @@
+header.main-header {
+
+  height: 36px;
+  background: linear-gradient($channelBgColor 0, lighten($channelBgColor, 10) 25%, darken($channelBgColor, 10) 50%, $channelBgColor 100%);
+  box-shadow:  0 0 8px 4px rgba(0, 0, 0, 0.5);
+  position: relative;
+  z-index: 100;
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  & > h1 {
+    font-size: 20px;
+    font-weight: bold;
+    color: rgba(255, 192, 128, 0.75);
+
+
+    background: repeating-linear-gradient($channelBgColor  0, black 3px, lighten($channelBgColor, 10) 4px,  $channelBgColor 5px);
+
+    display: inline-block;
+    flex: 0 0 auto;
+
+    padding: 2px 12px 2px 12px;
+
+    border-top-right-radius: 11px;
+    border-bottom-right-radius: 11px;
+
+    box-shadow: inset 0 0 4px 2px rgba(0, 0, 0, 0.5);
+  }
+
+}

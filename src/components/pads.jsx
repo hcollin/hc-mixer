@@ -51,7 +51,7 @@ export class Pads extends React.Component {
     return (
       <div className={this.state.active ? "pads active" : "pads"} onMouseEnter={this.handleMouseEnter} onMouseLeave={this.handleMouseLeave}>
         <header>
-          Pad player <small>(hover mouse)</small>
+          <h1>Pad player</h1>
         </header>
         <Pad label="7" keycode="Numpad7"></Pad>
         <Pad label="8" keycode="Numpad8"></Pad>
