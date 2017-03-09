@@ -128,6 +128,15 @@ div.tracker {
           &.large {
             width: 32px;
             height: 32px;
+            background-color: rgba(64, 64, 64, 0.35);
+
+            &.play {
+              background-color: rgba(64, 255, 64, 0.35);
+            }
+
+            &.stop {
+              background-color: rgba(255, 64, 64, 0.35);
+            }
           }
         }
       }
